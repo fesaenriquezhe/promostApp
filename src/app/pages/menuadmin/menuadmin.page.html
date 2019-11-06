@@ -1,0 +1,24 @@
+<ion-menu id="mymenuE" contentId="content">
+  <ion-header>
+    <ion-toolbar color="secondary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-menu-toggle auto-hide="false" *ngFor="let p of pages">
+        <ion-item (click)="sendpage(p)">
+          <ion-icon [name]="p.icon" slot="start"></ion-icon>
+          {{p.title}}
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-item (click)="cerrarsesion()">
+        <ion-icon name="log-out" slot="start"></ion-icon>
+        Cerrar sesión
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-router-outlet id="content" main></ion-router-outlet>
