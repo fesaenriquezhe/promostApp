@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform, AlertController } from '@ionic/angular';
+import { Platform, AlertController, LoadingController } from '@ionic/angular';
+import { EmpresasService } from "../../services/empresas.service";
+
 
 
 @Component({
@@ -8,17 +10,18 @@ import { Platform, AlertController } from '@ionic/angular';
   styleUrls: ['./createempresa.page.scss'],
 
 })
-export class CreateempresaPage implements OnInit {
+export class CreateempresaPage implements OnInit{
 
-  constructor (private platform: Platform, private alertCtrl : AlertController) {
+  empresas: any; 
 
+  constructor (private empresa : EmpresasService) {
+      
   }
 
   ngOnInit() {
-  }
-
-  checkPlatform() {
     
   }
+
+  
 
 }
