@@ -80,4 +80,8 @@ export class HomePage implements OnInit {
     
       }
 
+      register(){
+        this.router.navigate(['/registeruser']);
+      }
+
 }
