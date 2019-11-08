@@ -16,10 +16,14 @@ export class AllempresasPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.empresa.getEmpresas());
+    //console.log(this.empresa.getEmpresas());
     this.empresa.getEmpresas().then(empre => {
+      if(this.empresa !=null){ 
       this.empresas = empre;
+      }else{
+        console.log('No existen empresas');
+      }
     });//Llamamos a la función getPost cuando la vista se cargue
   }
-
+  
 }

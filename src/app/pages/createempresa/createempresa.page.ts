@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform, AlertController, LoadingController } from '@ionic/angular';
 import { EmpresasService } from "../../services/empresas.service";
+import { Router } from '@angular/router';
+import { Empresa } from "../../models/empresa";
 
 
 
@@ -11,17 +12,21 @@ import { EmpresasService } from "../../services/empresas.service";
 
 })
 export class CreateempresaPage implements OnInit{
+  
+  data : Empresa;
 
-  empresas: any; 
-
-  constructor (private empresa : EmpresasService) {
-      
+  constructor (private empresa : EmpresasService, private router : Router) {
+    this.data = new Empresa();
   }
 
   ngOnInit() {
     
-  }
+    }
 
-  
-
+    AgreagarEmpresa(){
+      console.log(this.data)
+      this.empresa.addEmpresa(this.data).subscribe((response) => {
+        this.router.navigate(['home']);
+      });
+      }
 }

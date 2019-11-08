@@ -1,20 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
+import { Empresa } from '../models/empresa';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 export class EmpresasService {
 
-  url = 'http://localhost:3000/empresas'
+  url = 'http://localhost:3000';
+  
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
 
   constructor(public http: HttpClient) {
     console.log('Service Empresas')
    }
 
   getEmpresas() {
-    return new Promise(resolve=>{
-      this.http.get(this.url).subscribe(data=>{
+    return new Promise(resolve =>{
+      this.http.get(this.url+'/empresas').subscribe(data=>{
           resolve(data);
       },error=>{
         console.log(error);
@@ -22,15 +31,22 @@ export class EmpresasService {
     });
   }
 
-  addPost(data) {
-    return new Promise((resolve, reject) => {
-      this.http.post(this.url, JSON.stringify(data))
-        .subscribe(response => {
-          resolve(response);
-        }, (error) => {
-          reject(error);
-        });
-    });
+  getEmpresasById(id){
+    return this.http.get<Empresa>(this.url + '/empresas/' + id).pipe(retry(2))
   }
+
+  addEmpresa(item): Observable<Empresa> {
+    console.log(item)
+    return this.http.post<Empresa>(this.url+'/empresas', JSON.stringify(item),this.httpOptions);
+      
+  }  
+
+  updateEmpresa(id, item): Observable<Empresa> {
+    console.log(id)
+    console.log(item)
+    return this.http.put<Empresa>(this.url + '/empresas/' + id, JSON.stringify(item), this.httpOptions)
+  }
+
+
 
 }

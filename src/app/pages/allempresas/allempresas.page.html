@@ -1,14 +1,32 @@
 
 <ion-header>
   <ion-toolbar color="primary">
-      <ion-title class="ion-text-center">Empresas</ion-title>
+      <ion-title class="ion-text-center">Lista de Empresas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let emp of empresas">
-      <h2>{{emp.Nombre}}</h2>
-    </ion-item>
-  </ion-list>
+<ion-content padding>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">RFC</th>
+        <th scope="col">Domicilio</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let emp of empresas">
+        <td>{{emp.idEmpresa}}</td>
+        <td>{{emp.Nombre}}</td>
+        <td>{{emp.RFC}}</td>
+        <td>{{emp.Domicilio}}</td>
+        <td style="display: flex;"> 
+          <ion-button color="warning" size="small" routerLink='/updateempresa/{{emp.idEmpresa}}'> </ion-button>
+        </td>
+      </tr>
+    </tbody>
+   
+  </table>
 </ion-content>
