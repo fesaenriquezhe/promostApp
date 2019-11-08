@@ -1,0 +1,14 @@
+
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-title class="ion-text-center">Empresas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let emp of empresas">
+      <h2>{{emp.Nombre}}</h2>
+    </ion-item>
+  </ion-list>
+</ion-content>
