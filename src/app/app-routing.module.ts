@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: 'createempresa', loadChildren: './pages/createempresa/createempresa.module#CreateempresaPageModule' },
   { path: 'registeruser', loadChildren: './pages/registeruser/registeruser.module#RegisteruserPageModule' },
   { path: 'allempresas', loadChildren: './pages/allempresas/allempresas.module#AllempresasPageModule' },
-  { path: 'updateempresa/:id', loadChildren: './pages/updateempresa/updateempresa.module#UpdateempresaPageModule' },
+  { path: 'updateempresa/:id', loadChildren: './pages/updateempresa/updateempresa.module#UpdateempresaPageModule' },  { path: 'arreglar', loadChildren: './pages/arreglar/arreglar.module#ArreglarPageModule' },
+
   
 
 
