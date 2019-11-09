@@ -11,10 +11,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RegisteruserPage implements OnInit {
 
-  public registerFormE: FormGroup;
+  public registerFormU: FormGroup;
+  public selecday = new Date();
   datauser:any;
+  maxuse:any;
   url="";
   msj="";
+  resdata:any;
   itemRE:any;
 
   constructor(public formBuilder: FormBuilder,
@@ -23,20 +26,21 @@ export class RegisteruserPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router, 
     public httpc: HttpClient) { 
-      this.registerFormE = formBuilder.group({
-        noctrl: ['', [Validators.required,Validators.pattern(/^[0-9]*$/),Validators.maxLength(8)]],
+      this.registerFormU = formBuilder.group({
         name: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź ]*$/)])],
-        last: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź ]*$/)])],
-        email: ['', [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)]],
-        password: ['', [Validators.required,Validators.pattern(/^[0-9]*$/)]],
-        passwordc: ['', [Validators.required,Validators.pattern(/^[0-9]*$/)]],
-        carrerasel: ['',[Validators.required]],
-        telefono: ['', [Validators.required,Validators.pattern(/^[0-9]*$/),Validators.maxLength(10)]]
+        firstlast: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź ]*$/)])],
+        secondlast: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź ]*$/)])],
+        addres: ['', [Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź0-9 ]*$/)]],
+        phone: ['', [Validators.required,Validators.pattern(/^[0-9]*$/), Validators.maxLength(10)]],
+        rfc: ['', [Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź0-9 ]*$/)]],
+        user: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź0-9 ]*$/)])],
+        password: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź0-9 ]*$/)])],
+        cpassword: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź0-9 ]*$/)])]
       });
     }
 
   ngOnInit() {
-    this.httpc.get(this.url+"/estudiantes")    
+    this.httpc.get(this.url+"/usuarios")    
         .subscribe(
             res => {
                 this.datauser = res;
@@ -45,7 +49,136 @@ export class RegisteruserPage implements OnInit {
             error => {
                 console.log(error);
             }
-        );    
+        );
+        
+        this.httpc.get(this.url+"/maxusuarios")    
+        .subscribe(
+            res => {
+                this.maxuse = res;
+                //console.log(this.dataes);
+            },
+            error => {
+                console.log(error);
+            }
+        );  
   }
+
+  async existuser(){
+    this.confirmar();
+    /*var us = this.registerFormU.value.user;
+    var obuser = this.datauser.find(function(user){
+      return user.Usuario == us;
+    });
+    if(obuser != undefined){
+      let alert = await this.alertCtrl.create({
+        header: "Error",
+        subHeader: "El usuario "+us+" ya existe!",
+        buttons: ["Ok"]
+      });
+      await alert.present();
+    }else{
+      this.confirmar();
+    }*/
+
+  }
+
+  async confirmar(){
+    var dia = this.selecday.getDate();
+    var mes = this.selecday.getMonth()+1;
+    var año = this.selecday.getFullYear();
+    var fecha = año+"-"+mes+"-"+dia;
+    //console.log(fecha);
+    if(this.registerFormU.value.password == this.registerFormU.value.cpassword){
+      let alert = await this.alertCtrl.create({
+        header: "¿Datos Correctos?",
+        message: "Nombre: "+this.registerFormU.value.name+"<br/>Apellidos: "+this.registerFormU.value.firstlast+" "+this.registerFormU.value.secondlast+
+        "<br/>Domicilio: "+this.registerFormU.value.addres+"<br/>Teléfono: "+this.registerFormU.value.phone+"<br/>RFC: "+this.registerFormU.value.rfc+
+        "<br/>Usuario: "+this.registerFormU.value.user+"<br/>Contraseña: "+this.registerFormU.value.password+"<br/>Fecha: "+fecha,
+        buttons: [
+          {
+            text: 'Aceptar',
+            handler: () => {
+              this.registrar(fecha);
+            }
+          },
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {
+              //console.log('cancelo');
+            }
+          }        
+        ]
+      });
+      await alert.present();
+    }else{
+      let alert = await this.alertCtrl.create({
+        header: "Error",
+        subHeader: "Las contraeñas no coinciden",
+        buttons: ["Ok"]
+      });
+      await alert.present();
+    }
+  }
+
+  registrar(fec: string){
+
+    var id=document.getElementById('maxid').innerHTML;
+
+    let postData = {
+        "idUsuario": id,
+        "Nombre": this.registerFormU.value.name,
+        "ApellidoPaterno": this.registerFormU.value.firstlast,
+        "ApellidoMaterno": this.registerFormU.value.secondlast,
+        "Domicilio": this.registerFormU.value.addres,
+        "Telefono": this.registerFormU.value.phone,
+        "RFC": this.registerFormU.value.rfc,
+        "Usuario": this.registerFormU.value.user,
+        "Contraseña": this.registerFormU.value.password,
+        "TipoUsuario": "Administrador",
+        "Activo": "S",
+        "FechaCreacion": fec,
+        "FechaModificacion": fec
+    }
+  
+    this.httpc.post(this.url+"/usuarios",postData)
+      .subscribe(async data => {
+        this.resdata = data;
+      if(this.resdata.message == "Successfull"){
+        let alert = await this.alertCtrl.create({
+          header: "¡Operación Exitosa!",
+          subHeader: "Usuario "+this.registerFormU.value.user+" creado correctamente",
+          buttons: [
+            {
+              text: 'OK',
+              handler: () => {
+                this.navCtrl.navigateRoot('home');
+              }
+            }
+          ]
+        });
+        await alert.present();
+      }else{
+        let alert = await this.alertCtrl.create({
+          header: "¡Operación Fallida!",
+          subHeader: "Hubo un problema al crear el usuario "+this.registerFormU.value.user,
+          buttons: [
+            {
+              text: 'OK',
+              handler: () => {
+              }
+            }
+          ]
+        });
+        await alert.present();
+      }
+       });
+  }
+  
+  backlogin(){
+    this.navCtrl.navigateRoot('home');
+  }
+
+  
 
 }
