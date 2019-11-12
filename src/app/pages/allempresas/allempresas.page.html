@@ -2,10 +2,15 @@
 <ion-header>
   <ion-toolbar color="primary">
       <ion-title class="ion-text-center">Lista de Empresas</ion-title>
+      
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding >
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    
   <table class="table">
     <thead>
       <tr>
@@ -13,7 +18,9 @@
         <th scope="col">Nombre</th>
         <th scope="col">RFC</th>
         <th scope="col">Domicilio</th>
+        <th><ion-button color="primary" size="small" routerLink='/createempresa/'> </ion-button></th>
       </tr>
+      
     </thead>
 
     <tbody>
@@ -23,10 +30,15 @@
         <td>{{emp.RFC}}</td>
         <td>{{emp.Domicilio}}</td>
         <td style="display: flex;"> 
-          <ion-button color="warning" size="small" routerLink='/updateempresa/{{emp.idEmpresa}}'> </ion-button>
+          <ion-button color="warning" size="small" routerLink='/updateempresa/{{emp.idEmpresa}}' > </ion-button>
         </td>
+        <td style="display: flex;"> 
+          <ion-button color="danger" size="small" (click) = "eliminarEmpresa(emp.idEmpresa)" > </ion-button>
+        </td>
+        
       </tr>
     </tbody>
-   
+    
   </table>
+        
 </ion-content>

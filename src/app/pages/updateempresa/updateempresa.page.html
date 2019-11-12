@@ -1,17 +1,44 @@
 <ion-header>
-    <ion-toolbar color="primary">
-        <ion-title class="ion-text-center">Registro de empresa</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content class="ion-padding">
+  <ion-toolbar color="primary">
+      <ion-title class="ion-text-center">Editar empresa</ion-title>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content class="ion-padding" >
+
+  <ion-item >
+    <ion-label position="floating">Nombre de la empresa</ion-label>
+    <ion-input type = "text"  [(ngModel)]="data2.Nombre" ></ion-input>
+  </ion-item>
+  <br>
+  <ion-item >
+      <ion-label position="floating">RFC</ion-label>
+      <ion-input type = "text"  [(ngModel)]="data2.RFC" ></ion-input>
+  </ion-item>
+  <br>
+  <ion-item >
+      <ion-label position="floating">Domicilio</ion-label>
+      <ion-input type = "text"  [(ngModel)]="data2.Domicilio" ></ion-input>
+  </ion-item >
+  <br>
+  <ion-item >
+      <ion-label position="floating">Activo</ion-label>
+      <ion-input type = "text"  [(ngModel)]="data2.Activo" ></ion-input>
+  </ion-item>
+  <br>
+  <ion-item >
+      <ion-label position="floating">Fecha creacion</ion-label>
+      <ion-input type = "text" [(ngModel)]="data2.FechaCreacion" ></ion-input>
+  </ion-item>
+  <br>
+  <ion-item >
+      <ion-label position="floating">Fecha Modificacion</ion-label>
+      <ion-input type = "text" [(ngModel)]="data2.FechaModificacion" ></ion-input>
+  </ion-item>
   
-    
-    
-    <br>
-    <ion-button expand="large" >Actualizar</ion-button>
-    <br>
-    
-  </ion-content>
   
+  <br>
+  <ion-button expand="large" (click)="ActualizarEmpresa()">Actualizar</ion-button>
+  <br>
+  
+</ion-content>

@@ -32,8 +32,9 @@ export class EmpresasService {
   }
 
   getEmpresasById(id){
-    return this.http.get<Empresa>(this.url + '/empresas/' + id).pipe(retry(2))
-  }
+    return this.http.get<Empresa>(this.url + '/empresas/' + id)
+      
+    }
 
   addEmpresa(item): Observable<Empresa> {
     console.log(item)
@@ -42,11 +43,16 @@ export class EmpresasService {
   }  
 
   updateEmpresa(id, item): Observable<Empresa> {
-    console.log(id)
-    console.log(item)
-    return this.http.put<Empresa>(this.url + '/empresas/' + id, JSON.stringify(item), this.httpOptions)
+    console.log('Funcion update del servicio')
+    console.log(id);   
+    console.log(item); 
+    return this.http.post<Empresa>(this.url + '/empresas/' + id, JSON.stringify(item), this.httpOptions)
+    
   }
 
-
+  deleteEmpresa(id) {
+    console.log(id)
+    return this.http.delete<Empresa>(this.url + '/empresas/' + id, this.httpOptions)
+  }
 
 }
