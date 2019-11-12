@@ -1,9 +1,48 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>micuenta</ion-title>
+  <ion-toolbar color="secondary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title>Mi cuenta</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  
+      <ion-list>
+          <ion-item>
+            <strong>Nombre: </strong>
+            <label class="capital">{{nombre}}</label>
+          </ion-item>
+          <ion-item>
+            <strong>Apellidos: </strong>
+            <label class="capital">{{apellidopaterno+" "+apellidomaterno}}</label>
+          </ion-item>
+          <ion-item>
+            <strong>RFC: </strong>
+            <label class="mayus">{{rfc}}</label>
+          </ion-item>
+          <ion-item>
+            <strong>Domicilio: </strong>
+            <label class="capital">{{domicilio}}</label>
+          </ion-item>
+          <ion-item>
+            <strong>Teléfono: </strong>
+            <label>{{telefono}}</label>
+          </ion-item>
+          <ion-item>
+            <strong>Usuario: </strong>
+            <label>{{usuario}}</label>
+          </ion-item>
+          <ion-item>
+            <strong>Tipo de usuario: </strong>
+            <label class="capital">{{tipousuario}}</label>
+          </ion-item>
+    </ion-list>
 
+    <div>
+      <ion-button color="secondary" expand="full" (click)="actualizar()">Actualizar cuenta</ion-button>
+      <ion-button color="danger" expand="full" (click)="eliminar()">Eliminar cuenta</ion-button>
+    </div>
+  
 </ion-content>

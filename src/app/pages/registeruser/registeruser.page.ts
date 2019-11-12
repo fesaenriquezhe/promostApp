@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, LoadingController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-registeruser',
@@ -13,19 +14,25 @@ export class RegisteruserPage implements OnInit {
 
   public registerFormU: FormGroup;
   public selecday = new Date();
-  datauser:any;
-  maxuse:any;
+  //datauser:any;
+  //maxuse:any;
   url="";
-  msj="";
-  resdata:any;
-  itemRE:any;
+  //msj="";
+  //resdata:any;
+  itemregi:any;
 
   constructor(public formBuilder: FormBuilder,
     public alertCtrl: AlertController,
     public navCtrl: NavController,
     private route: ActivatedRoute,
     private router: Router, 
-    public httpc: HttpClient) { 
+    public httpc: HttpClient,
+    private loadingController: LoadingController,
+    private users: UsersService) { 
+      this.route.queryParams.subscribe(params => {
+        this.itemregi = this.router.getCurrentNavigation().extras.state.reguser;
+        this.url = this.itemregi.url;
+      });
       this.registerFormU = formBuilder.group({
         name: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź ]*$/)])],
         firstlast: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Zá-źÁ-Ź ]*$/)])],
@@ -40,33 +47,14 @@ export class RegisteruserPage implements OnInit {
     }
 
   ngOnInit() {
-    this.httpc.get(this.url+"/usuarios")    
-        .subscribe(
-            res => {
-                this.datauser = res;
-                //console.log(this.dataes);
-            },
-            error => {
-                console.log(error);
-            }
-        );
-        
-        this.httpc.get(this.url+"/maxusuarios")    
-        .subscribe(
-            res => {
-                this.maxuse = res;
-                //console.log(this.dataes);
-            },
-            error => {
-                console.log(error);
-            }
-        );  
+    this.users.getUsers(this.url);
+    this.users.getUsersMax(this.url);
   }
 
   async existuser(){
-    this.confirmar();
-    /*var us = this.registerFormU.value.user;
-    var obuser = this.datauser.find(function(user){
+    //this.confirmar();
+    var us = this.registerFormU.value.user;
+    var obuser = this.users.datauser.find(function(user){
       return user.Usuario == us;
     });
     if(obuser != undefined){
@@ -78,7 +66,7 @@ export class RegisteruserPage implements OnInit {
       await alert.present();
     }else{
       this.confirmar();
-    }*/
+    }
 
   }
 
@@ -121,7 +109,7 @@ export class RegisteruserPage implements OnInit {
     }
   }
 
-  registrar(fec: string){
+  async registrar(fec: string){
 
     var id=document.getElementById('maxid').innerHTML;
 
@@ -140,39 +128,50 @@ export class RegisteruserPage implements OnInit {
         "FechaCreacion": fec,
         "FechaModificacion": fec
     }
+
+    this.users.addUsers(this.url,postData);
+
+    const loading = await this.loadingController.create({
+      message: 'Guardando usuario..'
+    });
+    await loading.present();
+
+    loading.dismiss();
+
+    this.postconfirmacion();
   
-    this.httpc.post(this.url+"/usuarios",postData)
-      .subscribe(async data => {
-        this.resdata = data;
-      if(this.resdata.message == "Successfull"){
-        let alert = await this.alertCtrl.create({
-          header: "¡Operación Exitosa!",
-          subHeader: "Usuario "+this.registerFormU.value.user+" creado correctamente",
-          buttons: [
-            {
-              text: 'OK',
-              handler: () => {
-                this.navCtrl.navigateRoot('home');
-              }
+  }
+
+  async postconfirmacion(){
+    if(this.users.msjpost == "Successfull"){
+      let alert = await this.alertCtrl.create({
+        header: "¡Operación Exitosa!",
+        subHeader: "Usuario "+this.registerFormU.value.user+" creado correctamente",
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+              this.navCtrl.navigateRoot('home');
             }
-          ]
-        });
-        await alert.present();
-      }else{
-        let alert = await this.alertCtrl.create({
-          header: "¡Operación Fallida!",
-          subHeader: "Hubo un problema al crear el usuario "+this.registerFormU.value.user,
-          buttons: [
-            {
-              text: 'OK',
-              handler: () => {
-              }
+          }
+        ]
+      });
+      await alert.present();
+    }else{
+      let alert = await this.alertCtrl.create({
+        header: "¡Operación Fallida!",
+        subHeader: "Hubo un problema al crear el usuario "+this.registerFormU.value.user,
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
             }
-          ]
-        });
-        await alert.present();
-      }
-       });
+          }
+        ]
+      });
+      await alert.present();
+    }
+
   }
   
   backlogin(){

@@ -7,7 +7,7 @@
 <ion-content class="ion-padding">
 
     <form [formGroup]="registerFormU" novalidate>
-        <ion-item id="Ocultarid" *ngFor="let i of maxuse">
+        <ion-item id="Ocultarid" *ngFor="let i of users.maxuser">
             <ion-label>Id_Usuario:</ion-label>
             <ion-label id="maxid">{{i.Maxvalor+1}}</ion-label>
           </ion-item> 
@@ -69,7 +69,7 @@
                   <p color="danger" ion-text *ngIf="registerFormU.get('user').hasError('pattern')">Introduce solo letras y números</p>
                 </ion-item>
             <ion-item>
-                <ion-label position="floating">NIP:</ion-label>
+                <ion-label position="floating">Contraseña:</ion-label>
                 <ion-input formControlName="password" type="password"> </ion-input>       
               </ion-item>
               <ion-item *ngIf="registerFormU.get('password').errors && registerFormU.get('password').dirty">
@@ -77,7 +77,7 @@
                 <p color="danger" ion-text *ngIf="registerFormU.get('password').hasError('pattern')">Introduce solo letras y numeros</p>
               </ion-item>
               <ion-item>
-                  <ion-label position="floating">Confirme NIP:</ion-label>
+                  <ion-label position="floating">Confirme contraseña:</ion-label>
                   <ion-input formControlName="cpassword" type="password"> </ion-input>       
                 </ion-item>
                 <ion-item *ngIf="registerFormU.get('cpassword').errors && registerFormU.get('cpassword').dirty">
