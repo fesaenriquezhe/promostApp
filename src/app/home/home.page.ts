@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'app-home',
@@ -15,14 +16,16 @@ export class HomePage implements OnInit {
   password:string;
   datauser:any;
   itemuser:any;
+  itemreg: any;
 
   constructor(public httpc: HttpClient,
     public alertCtrl: AlertController,
     private loadingController: LoadingController,
-    private router: Router) {}
+    private router: Router,
+    private users: UsersService) {}
 
     ngOnInit(){
-      this.httpc.get(this.url+"/usuarios")
+      /*this.httpc.get(this.url+"/usuarios")
         .subscribe(
             res => {
                 this.datauser = res;
@@ -31,14 +34,15 @@ export class HomePage implements OnInit {
             error => {
                 console.log(error);
             }
-        );
+        );*/
+        this.users.getUsers(this.url);
     }
 
     async login(){
-      this.router.navigate(['/menuadmin']);
-      /*var us = this.username;
+      //this.router.navigate(['/menuadmin']);
+      var us = this.username;
       var ps = this.password;
-      var objuser = this.datauser.find(function(user){
+      var objuser = this.users.datauser.find(function(user){
         return user.Usuario == us;
       });
       if(objuser != undefined){
@@ -61,6 +65,7 @@ export class HomePage implements OnInit {
             usuario:objuser.Usuario,
             contraseña:objuser.Contraseña,
             tipousuario: objuser.TipoUsuario,
+            fechacreacion: objuser.FechaCreacion,
             url:this.url
           }
   
@@ -72,16 +77,34 @@ export class HomePage implements OnInit {
   
           this.router.navigate(['/menuadmin'],navigationExtras);
         }else{
-          
+          let alert = await this.alertCtrl.create({
+            header: "¡Error!",
+            subHeader: "La contraeña es incorrecta",
+            buttons: ["Ok"]
+          });
+          await alert.present();          
         }
       }else{
-        
-      }*/
+        let alert = await this.alertCtrl.create({
+          header: "¡Error!",
+          subHeader: "El usuario "+us+" no existe",
+          buttons: ["Ok"]
+        });
+        await alert.present();        
+      }
     
       }
 
       register(){
-        this.router.navigate(['/registeruser']);
+        this.itemreg = {
+          url:this.url
+        }
+        let navigationExtras: NavigationExtras = {
+          state: {
+            reguser: this.itemreg
+          }
+        }
+        this.router.navigate(['/registeruser'], navigationExtras);
       }
 
 }

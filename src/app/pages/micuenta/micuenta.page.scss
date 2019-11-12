@@ -1,0 +1,54 @@
+.mayus{
+    text-transform: uppercase;
+}
+
+.capital{
+    text-transform: capitalize;
+}
+
+#ocultar{
+    display: none;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+header {
+    text-align: right;
+}
+ul, li {
+    list-style: none;
+    padding: 0px;
+}
+.nav li a {
+    background:white;
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+.nav li a:hover {
+    background-color: gray;
+}
+.nav > li {
+    float: right;
+}
+.nav li ul {
+    display:none;
+    position: absolute;
+
+}
+.nav li:hover > ul {
+    text-align: center;
+    display: block;
+}
+.formu {
+    text-align: left;
+}
+
