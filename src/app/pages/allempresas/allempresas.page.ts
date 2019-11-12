@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpresasService } from "../../services/empresas.service";
+import { ModalController } from '@ionic/angular';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 
 @Component({
@@ -10,20 +13,41 @@ import { EmpresasService } from "../../services/empresas.service";
 export class AllempresasPage implements OnInit {
 
   empresas: any; 
+  data : any
 
-  constructor (private empresa : EmpresasService) {
-      console.log('Estas en create empresa ts')
+  constructor (private empresaService : EmpresasService, private modalController: ModalController,
+    private router : Router, private activatedRoute : ActivatedRoute) {
+      console.log('Estas en lista de empresa ts')
   }
 
   ngOnInit() {
-    //console.log(this.empresa.getEmpresas());
-    this.empresa.getEmpresas().then(empre => {
-      if(this.empresa !=null){ 
+    this.empresaService.getEmpresas().then(empre => {
+      if(this.empresaService !=null){ 
       this.empresas = empre;
       }else{
         console.log('No existen empresas');
       }
-    });//Llamamos a la función getPost cuando la vista se cargue
+      this.ngOnInit();
+    });
   }
+  
+
+  eliminarEmpresa(idEmpresa){
+    this.empresaService.deleteEmpresa(idEmpresa).subscribe((response) => {
+      this.router.navigate(['allempresas']);
+      this.ngOnInit();
+    });
+  }
+
+  doRefresh(event) {
+    console.log('Incio de refrescar');
+
+    setTimeout(() => {
+      console.log('refrescar terminado');
+      this.ngOnInit();
+      event.target.complete();
+    }, 2000);
+  }
+
   
 }

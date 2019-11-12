@@ -26,7 +26,7 @@ export class CreateempresaPage implements OnInit{
     AgreagarEmpresa(){
       console.log(this.data)
       this.empresa.addEmpresa(this.data).subscribe((response) => {
-        this.router.navigate(['home']);
+        this.router.navigate(['allempresas']);
       });
       }
 }

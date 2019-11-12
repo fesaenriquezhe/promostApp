@@ -11,27 +11,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class UpdateempresaPage implements OnInit {
 
   id: number;
-  data: Empresa;
+  data: object=null;
+  data2: Empresa;
 
   constructor(private empresaService : EmpresasService, private empresa : Empresa,
       private activatedRoute : ActivatedRoute, private router : Router) { 
-        this.data = new Empresa();
+        console.log('Estas en update empresa')
+        this.data2 = new Empresa();
       }
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params["id"];
     //get item details using id
-    this.empresaService.getEmpresasById(this.id).subscribe(response => {
-      console.log(response);
+    this.empresaService.getEmpresasById(this.id).subscribe(response => {      
       this.data = response;
     });
   }
 
   ActualizarEmpresa() {
-    //Update item by taking id and updated data object
+    console.log('Actualizar Empresa')
     this.empresaService.updateEmpresa(this.id, this.data).subscribe(response => {
       this.router.navigate(['allempresas']);
-      console.log(this.data);
+      console.log(this.data); 
     })
   }
  
