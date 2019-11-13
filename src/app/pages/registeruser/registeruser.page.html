@@ -1,9 +1,94 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>registeruser</ion-title>
+  <ion-toolbar color="secondary">
+    <ion-title>Registro de usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+
+    <form [formGroup]="registerFormU" novalidate>
+        <ion-item id="Ocultarid" *ngFor="let i of users.maxuser">
+            <ion-label>Id_Usuario:</ion-label>
+            <ion-label id="maxid">{{i.Maxvalor+1}}</ion-label>
+          </ion-item> 
+        <ion-item>
+          <ion-label position="floating">Nombre: </ion-label>
+          <ion-input formControlName="name" type="text"> </ion-input>    
+        </ion-item>
+        <ion-item *ngIf="registerFormU.get('name').errors && registerFormU.get('name').dirty">
+            <p color="danger" ion-text *ngIf="registerFormU.get('name').hasError('required')">Campo Obligatorio</p>
+            <p color="danger" ion-text *ngIf="registerFormU.get('name').hasError('pattern')">Introduce solo letras</p>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Apellido Paterno:</ion-label>
+          <ion-input formControlName="firstlast" type="text"> </ion-input>       
+        </ion-item>
+        <ion-item *ngIf="registerFormU.get('firstlast').errors && registerFormU.get('firstlast').dirty">
+          <p color="danger" ion-text *ngIf="registerFormU.get('firstlast').hasError('required')">Campo Obligatorio</p>
+          <p color="danger" ion-text *ngIf="registerFormU.get('firstlast').hasError('pattern')">Introduce solo letras</p>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Apellido Materno:</ion-label>
+            <ion-input formControlName="secondlast" type="text"> </ion-input>       
+        </ion-item>
+        <ion-item *ngIf="registerFormU.get('secondlast').errors && registerFormU.get('secondlast').dirty">
+          <p color="danger" ion-text *ngIf="registerFormU.get('secondlast').hasError('required')">Campo Obligatorio</p>
+          <p color="danger" ion-text *ngIf="registerFormU.get('secondlast').hasError('pattern')">Introduce solo letras</p>
+        </ion-item>
+          <ion-item>
+              <ion-label position="floating">Domicilio:</ion-label>
+              <ion-input formControlName="addres" type="text"> </ion-input>       
+            </ion-item>
+            <ion-item *ngIf="registerFormU.get('addres').errors && registerFormU.get('addres').dirty">
+              <p color="danger" ion-text *ngIf="registerFormU.get('addres').hasError('required')">Campo Obligatorio</p>
+              <p color="danger" ion-text *ngIf="registerFormU.get('addres').hasError('pattern')">Introduce solo letras y números</p>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Teléfono:</ion-label>
+              <ion-input formControlName="phone" type="number"> </ion-input>       
+            </ion-item>
+            <ion-item *ngIf="registerFormU.get('phone').errors && registerFormU.get('phone').dirty">
+              <p color="danger" ion-text *ngIf="registerFormU.get('phone').hasError('required')">Campo Obligatorio</p>
+              <p color="danger" ion-text *ngIf="registerFormU.get('phone').hasError('pattern')">Introduce un número válido</p>
+              <p color="danger" ion-text *ngIf="registerFormU.get('phone').hasError('maxlength')">Maximo 10 carácteres</p>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating">RFC:</ion-label>
+                <ion-input formControlName="rfc" type="text"> </ion-input>       
+              </ion-item>
+              <ion-item *ngIf="registerFormU.get('rfc').errors && registerFormU.get('rfc').dirty">
+                <p color="danger" ion-text *ngIf="registerFormU.get('rfc').hasError('required')">Campo Obligatorio</p>
+                <p color="danger" ion-text *ngIf="registerFormU.get('rfc').hasError('pattern')">Introduce solo letras y números</p>
+              </ion-item>
+              <ion-item>
+                  <ion-label position="floating">Usuario:</ion-label>
+                  <ion-input formControlName="user" type="text"> </ion-input>       
+                </ion-item>
+                <ion-item *ngIf="registerFormU.get('user').errors && registerFormU.get('user').dirty">
+                  <p color="danger" ion-text *ngIf="registerFormU.get('user').hasError('required')">Campo Obligatorio</p>
+                  <p color="danger" ion-text *ngIf="registerFormU.get('user').hasError('pattern')">Introduce solo letras y números</p>
+                </ion-item>
+            <ion-item>
+                <ion-label position="floating">Contraseña:</ion-label>
+                <ion-input formControlName="password" type="password"> </ion-input>       
+              </ion-item>
+              <ion-item *ngIf="registerFormU.get('password').errors && registerFormU.get('password').dirty">
+                <p color="danger" ion-text *ngIf="registerFormU.get('password').hasError('required')">Campo Obligatorio</p>
+                <p color="danger" ion-text *ngIf="registerFormU.get('password').hasError('pattern')">Introduce solo letras y numeros</p>
+              </ion-item>
+              <ion-item>
+                  <ion-label position="floating">Confirme contraseña:</ion-label>
+                  <ion-input formControlName="cpassword" type="password"> </ion-input>       
+                </ion-item>
+                <ion-item *ngIf="registerFormU.get('cpassword').errors && registerFormU.get('cpassword').dirty">
+                  <p color="danger" ion-text *ngIf="registerFormU.get('cpassword').hasError('required')">Campo Obligatorio</p>
+                  <p color="danger" ion-text *ngIf="registerFormU.get('cpassword').hasError('pattern')">Introduce solo letras y numeros</p>
+                </ion-item>
+
+      </form>
+      <div class="ion-text-center">
+        <ion-button color="secondary" round [disabled]="registerFormU.invalid" (click)="existuser()">Registrar</ion-button>
+        <ion-button color="secondary" round (click)="backlogin()">Cancelar</ion-button>
+      </div>
 
 </ion-content>

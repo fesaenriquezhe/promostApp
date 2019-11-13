@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpresasService } from "../../services/empresas.service";
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
+
 
 
 
@@ -14,10 +15,13 @@ export class AllempresasPage implements OnInit {
 
   empresas: any; 
   data : any
+  
+  Nombre=""
 
   constructor (private empresaService : EmpresasService, private modalController: ModalController,
-    private router : Router, private activatedRoute : ActivatedRoute) {
+    private router : Router, private activatedRoute : ActivatedRoute,private  navController :NavController) {
       console.log('Estas en lista de empresa ts')
+      
   }
 
   ngOnInit() {
@@ -28,6 +32,7 @@ export class AllempresasPage implements OnInit {
         console.log('No existen empresas');
       }
       this.ngOnInit();
+      
     });
   }
   
