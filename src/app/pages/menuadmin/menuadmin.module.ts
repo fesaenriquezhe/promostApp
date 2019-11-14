@@ -23,6 +23,7 @@ const routes: Routes = [
       { path: 'inicioadmin', loadChildren: '../inicioadmin/inicioadmin.module#InicioadminPageModule' },
       { path: 'acercade', loadChildren: '../acercade/acercade.module#AcercadePageModule' },
       { path: 'updateuser', loadChildren: '../updateuser/updateuser.module#UpdateuserPageModule' },
+      { path: 'detailsempresa/:id', loadChildren: './pages/detailsempresa/detailsempresa.module#DetailsempresaPageModule' },
     ]
   }
 ];

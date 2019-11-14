@@ -10,7 +10,7 @@ import { LoadingController, AlertController, NavController } from '@ionic/angula
   styleUrls: ['./micuenta.page.scss'],
 })
 export class MicuentaPage implements OnInit {
-
+  idusuario2=""
   idusuario="";
   nombre="";
   apellidopaterno="";
@@ -44,6 +44,7 @@ export class MicuentaPage implements OnInit {
       this.tipousuario = this.menuadmin.tipousuario;
       this.fechacreacion = this.menuadmin.fechacreacion;
       this.url = this.menuadmin.url;
+      
   }
 
   mostraropciones(){

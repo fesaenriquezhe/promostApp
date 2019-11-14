@@ -42,10 +42,10 @@ export class EmpresasService {
       
   }  
 
-  updateEmpresa(id, item): Observable<Empresa> {
+  updateEmpresa(id, item) {
     console.log('Funcion update del servicio')
     console.log(id);   
-    console.log(item); 
+    console.log(item);    
     return this.http.post<Empresa>(this.url + '/empresas/' + id, JSON.stringify(item), this.httpOptions)
     
   }
@@ -53,6 +53,10 @@ export class EmpresasService {
   deleteEmpresa(id) {
     console.log(id)
     return this.http.delete<Empresa>(this.url + '/empresas/' + id, this.httpOptions)
+  }
+
+  getEmpresaUsuario(id){
+    return this.http.get<Empresa>(this.url + '/empresausuario/' + id)
   }
 
 }

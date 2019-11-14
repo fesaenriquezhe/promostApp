@@ -12,6 +12,8 @@ const routes: Routes = [
   { path: 'allempresas', loadChildren: './pages/allempresas/allempresas.module#AllempresasPageModule' },
   { path: 'updateempresa/:id', loadChildren: './pages/updateempresa/updateempresa.module#UpdateempresaPageModule' },
 
+  
+
 
 ];
 

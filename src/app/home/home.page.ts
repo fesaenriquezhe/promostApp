@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
-import { Router, NavigationExtras } from '@angular/router';
+import { ActivatedRoute,Router, NavigationExtras } from '@angular/router';
 import { UsersService } from '../services/users.service';
 
 @Component({
@@ -11,6 +11,7 @@ import { UsersService } from '../services/users.service';
 })
 export class HomePage implements OnInit {
 
+  id : any;
   url="http://localhost:3000";
   username:string;
   password:string;
@@ -22,7 +23,8 @@ export class HomePage implements OnInit {
     public alertCtrl: AlertController,
     private loadingController: LoadingController,
     private router: Router,
-    private users: UsersService) {}
+    private users: UsersService,
+    private activatedrouter : ActivatedRoute) {}
 
     ngOnInit(){
       /*this.httpc.get(this.url+"/usuarios")

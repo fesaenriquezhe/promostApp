@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, AngularDelegate } from '@ionic/angular';
+import { EmpresasService } from "../../services/empresas.service";
+import { UsersService } from "../../services/users.service";
 
 @Component({
   selector: 'app-menuadmin',
@@ -9,7 +11,10 @@ import { AlertController, NavController } from '@ionic/angular';
 })
 export class MenuadminPage implements OnInit {
 
+  
+
   pages = [
+    
     {
       title: 'Inicio',
       name: 'menuadmin/inicioadmin',
@@ -18,8 +23,8 @@ export class MenuadminPage implements OnInit {
     },
     {
       title: 'Datos de la empresa',
-      name: 'menuadmin/miempresa',
-      url: '/menuadmin/miempresa',
+      name: 'menuadmin/detailsempresa/id',
+      url: '/menuadmin/detailsempresa/id',
       icon: 'analytics'
     },
     {
@@ -42,6 +47,9 @@ export class MenuadminPage implements OnInit {
     }
   ];
 
+  id :any;
+  data: any;
+
   public idusuario="";
   public nombre="";
   public apellidopaterno="";
@@ -57,7 +65,8 @@ export class MenuadminPage implements OnInit {
   itemuser:any;
 
   constructor(private router: Router, private route: ActivatedRoute, private navCtrl: NavController, 
-    private alertCtrl: AlertController) { 
+    private alertCtrl: AlertController, private empresasService : EmpresasService, 
+    private userService : UsersService) { 
     this.route.queryParams.subscribe(params => {
       this.itemuser = this.router.getCurrentNavigation().extras.state.usuario;
       this.idusuario = this.itemuser.idusuario;
@@ -72,10 +81,16 @@ export class MenuadminPage implements OnInit {
       this.tipousuario = this.itemuser.tipousuario;
       this.fechacreacion = this.itemuser.fechacreacion; 
       this.url = this.itemuser.url;
+      
     });
+
+    
+    
   }
 
   ngOnInit() {
+
+    
   }
 
   sendpage(page: any){
